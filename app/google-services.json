@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "418315188831",
+    "firebase_url": "https://win-scan.firebaseio.com",
+    "project_id": "win-scan",
+    "storage_bucket": "win-scan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418315188831:android:73e75d65d0732a8d9e79ea",
+        "android_client_info": {
+          "package_name": "org.emberon.winscan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418315188831-bbjuss8jfvusgv21dmtrtpk0kdb1k3sj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC56JgmXnb16O9I7bKW9E9LISlRHxWD1xw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418315188831-bbjuss8jfvusgv21dmtrtpk0kdb1k3sj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
