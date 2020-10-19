@@ -54,4 +54,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.4.0'
     implementation 'com.google.firebase:firebase-firestore:21.7.1'
     implementation 'com.android.support:multidex:1.0.3'
+
+    // dagger 2.0
+    implementation "com.google.dagger:dagger:2.27"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.27"
 }
