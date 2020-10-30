@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment implements PaymentStatusListener {
                 textView.setText(s);
             }
         });
+        clearFields();
         buttonPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +119,13 @@ public class HomeFragment extends Fragment implements PaymentStatusListener {
             exception.printStackTrace();
             Toast.makeText(context, "Error: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    void clearFields() {
+       name.getEditText().getText().clear();
+       upiId.getEditText().getText().clear();
+       amount.getEditText().getText().clear();
+       note.getEditText().getText().clear();
     }
 
     @Override
@@ -181,10 +189,4 @@ public class HomeFragment extends Fragment implements PaymentStatusListener {
             Toast.makeText(context,"No UPI app found, please install one to continue", Toast.LENGTH_SHORT).show();
         }
     } */
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        easyUpiPayment.removePaymentStatusListener();
-    }
 }
