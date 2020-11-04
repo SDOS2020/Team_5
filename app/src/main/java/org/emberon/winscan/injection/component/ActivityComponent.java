@@ -1,9 +1,10 @@
 package org.emberon.winscan.injection.component;
 
-import org.emberon.winscan.MainActivity;
+import org.emberon.winscan.home.ui.HomeFragment;
 import org.emberon.winscan.injection.PerActivity;
 import org.emberon.winscan.injection.module.ActivityModule;
-import org.emberon.winscan.splash.SplashActivity;
+import org.emberon.winscan.main.MainActivity;
+import org.emberon.winscan.splash.ui.SplashActivity;
 
 import dagger.Component;
 
@@ -16,5 +17,7 @@ public interface ActivityComponent {
     void inject(SplashActivity splashActivity);
 
     void inject(MainActivity mainActivity);
+
+    void inject(HomeFragment homeFragment);
 
 }
