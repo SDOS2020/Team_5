@@ -5,9 +5,9 @@
     <application
         android:name=".WinCashApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/embereon_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/embereon_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.WinScan">
         <activity android:name="org.emberon.winscan.splash.ui.SplashActivity">
@@ -20,11 +20,7 @@
         <activity
             android:name="org.emberon.winscan.main.MainActivity"
             android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
         </activity>
     </application>
 
