@@ -1,42 +1,41 @@
-package org.emberon.winscan.dashboard;
+package org.emberon.winscan.dashboard.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import org.emberon.winscan.R;
+import org.emberon.winscan.base.BaseActivity;
+import org.emberon.winscan.dashboard.DashboardContract;
+import org.emberon.winscan.dashboard.TransactionListAdapter;
+import org.emberon.winscan.dashboard.presenter.DashboardPresenter;
+import org.emberon.winscan.databinding.FragmentDashboardBinding;
 
-public class DashboardFragment extends Fragment {
+import javax.inject.Inject;
 
-    private DashboardViewModel dashboardViewModel;
-    private RecyclerView recyclerView;
+public class DashboardFragment extends Fragment  implements DashboardContract.DashboardView {
+    @Inject
+    DashboardPresenter presenter;
+    private FragmentDashboardBinding binding;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((BaseActivity) getActivity()).getActivityComponent().inject(this);
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        presenter.attachView(this);
+        binding.trasactionView.setHasFixedSize(true);
+        binding.trasactionView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
+        binding.trasactionView.setAdapter(new TransactionListAdapter(presenter.getTransactionList()));
 
-        recyclerView = root.findViewById(R.id.trasactionView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        recyclerView.setAdapter(new TransactionListAdapter(1234));
-        return root;
+        return binding.getRoot();
     }
 }

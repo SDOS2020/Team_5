@@ -7,23 +7,31 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.emberon.winscan.R;
-import org.emberon.winscan.databinding.FragmentHomeBinding;
 
 public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView textview;
-    private TextView snoview;
+    private TextView transactionID;
+    private TextView dateOfTransaction;
+    private TextView payeeName;
+    private TextView amountPaid;
     public RecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
-        textview = itemView.findViewById(R.id.TID);
-        snoview = itemView.findViewById(R.id.Sno);
+        transactionID = itemView.findViewById(R.id.TID);
+        dateOfTransaction = itemView.findViewById(R.id.dateOfTransaction);
+        payeeName = itemView.findViewById(R.id.payeeName);
+        amountPaid = itemView.findViewById(R.id.amountPaid);
     }
 
-    public TextView getTextviewView(){
-        return textview;
+    public TextView getTransactionID(){
+        return transactionID;
     }
-
-    public TextView getSnoView(){
-        return snoview;
+    public TextView getDateOfTransaction(){
+        return dateOfTransaction;
+    }
+    public TextView getPayeeName(){
+        return payeeName;
+    }
+    public TextView getAmountPaid(){
+        return amountPaid;
     }
 }
