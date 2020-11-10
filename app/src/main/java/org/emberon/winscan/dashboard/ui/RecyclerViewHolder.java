@@ -1,4 +1,4 @@
-package org.emberon.winscan.dashboard;
+package org.emberon.winscan.dashboard.ui;
 
 import android.view.View;
 import android.widget.TextView;
@@ -10,10 +10,10 @@ import org.emberon.winscan.R;
 
 public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView transactionID;
-    private TextView dateOfTransaction;
-    private TextView payeeName;
-    private TextView amountPaid;
+    private final TextView transactionID;
+    private final TextView dateOfTransaction;
+    private final TextView payeeName;
+    private final TextView amountPaid;
     public RecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
         transactionID = itemView.findViewById(R.id.TID);

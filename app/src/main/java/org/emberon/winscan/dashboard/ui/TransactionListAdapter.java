@@ -1,4 +1,4 @@
-package org.emberon.winscan.dashboard;
+package org.emberon.winscan.dashboard.ui;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +13,16 @@ import org.emberon.winscan.domain.entity.Transaction;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
-    List<Transaction> transactionList = new ArrayList<Transaction>();
-    public TransactionListAdapter(List<Transaction> transactionList) {
-        this.transactionList = transactionList;
+
+    private List<Transaction> transactionList = new ArrayList<>();
+
+    @Inject
+    public TransactionListAdapter() {
     }
 
     @Override
@@ -30,7 +33,6 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerViewHol
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         return new RecyclerViewHolder(view);
     }
@@ -47,5 +49,9 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerViewHol
     @Override
     public int getItemCount() {
         return transactionList.size();
+    }
+
+    public void setTransactionList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
     }
 }
