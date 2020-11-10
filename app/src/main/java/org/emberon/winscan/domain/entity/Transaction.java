@@ -12,6 +12,9 @@ public class Transaction {
     private long amount;
     private Date transactionDate;
 
+    public Transaction() {
+    }
+
     public Transaction(String id, String payerName, String payeeName, String payerUpiId,
                        String payeeUpiId, long amount, Date transactionDate) {
         this.id = id;
