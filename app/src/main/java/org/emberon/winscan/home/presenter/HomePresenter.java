@@ -41,6 +41,12 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
     private final UpdateUser updateUserUseCase;
     private HomeContract.HomeView view;
     private EasyUpiPayment easyUpiPayment;
+    private String name;
+    private String upiId;
+    private String transactionId;
+    private String transactionRefId;
+    private String amount;
+    private String note;
 
     @Inject
     public HomePresenter(@ActivityContext Context context, Activity activity,
@@ -59,7 +65,7 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
     }
 
     @Override
-    public void initiatePayment(String payeeName, String upiId, String amount, String remarks) {
+    public void initiatePayment(String payeeName, String upiId, String amount, String note) {
         if (TextUtils.isEmpty(payeeName)) {
             view.showToast("Name is invalid");
         } else if (TextUtils.isEmpty(upiId)) {
@@ -71,13 +77,17 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
             if (!amount.contains("."))
                 amount = amount + ".00";
             String tid = "TID" + System.currentTimeMillis();
-            payUsingUpi(payeeName, upiId, tid, tid, amount, remarks);
+            this.name = payeeName;
+            this.upiId = upiId;
+            this.transactionId = tid;
+            this.transactionRefId = tid;
+            this.amount = amount;
+            this.note = note;
+            payUsingUpi(payeeName, upiId, tid, tid, amount, note);
         }
     }
 
-    private void payUsingUpi(String name, String upiId, String transactionId,
-                             String transactionRefId,
-                             String amount, String note) {
+    private void payUsingUpi(String name, String upiId, String transactionId, String transactionRefId, String amount, String note) {
         try {
             // Build instance
             EasyUpiPayment.Builder builder = new EasyUpiPayment.Builder(activity)
@@ -118,20 +128,28 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
     @Override
     public void onTransactionCancelled() {
         // Payment Cancelled by User
+        Date date = new Date();
         view.showToast("Transaction cancelled.");
+        updateTransactions(transactionId, "TRIAL", name,"MY@PAYTM", upiId, Long.parseLong(amount), date, Transaction.transactionStatus.CANCELLED);
     }
 
     private void onTransactionSuccess() {
         // Payment Success
+        Date date = new Date();
+        updateTransactions(transactionId, "TRIAL", name,"MY@PAYTM", upiId, Long.parseLong(amount), date, Transaction.transactionStatus.SUCCESSFUL);
         view.showToast("Transaction success.");
     }
 
     private void onTransactionSubmitted() {
         // Payment Pending
+        Date date = new Date();
+        updateTransactions(transactionId, "TRIAL", name,"MY@PAYTM", upiId, Long.parseLong(amount), date, Transaction.transactionStatus.PENDING);
     }
 
     private void onTransactionFailed() {
         // Payment Failed
+        Date date = new Date();
+        updateTransactions(transactionId, "TRIAL", name,"MY@PAYTM", upiId, Long.parseLong(amount), date, Transaction.transactionStatus.FAILED);
         view.showToast("Transaction failed.");
     }
 
@@ -202,11 +220,11 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
 
     private void updateTransactions(String id, String payerName, String payeeName,
                                     String payerUpiId,
-                                    String payeeUpiId, long amount, Date transactionDate) {
+                                    String payeeUpiId, long amount, Date transactionDate, Transaction.transactionStatus currentStatus) {
         final User user = localRepository.getUser();
         final List<Transaction> transactions = user.getTransactions();
-        transactions.add(new Transaction(id, payerName, payeeName, payerUpiId, payeeUpiId, amount
-                , transactionDate));
+        transactions.add(new Transaction(id, payerName, payeeName, payerUpiId, payeeUpiId, amount,
+                transactionDate,  currentStatus));
         localRepository.saveUser(user);
         useCaseHandler.execute(updateUserUseCase, new UpdateUser.RequestValues(user),
                 new UseCase.UseCaseCallback<UpdateUser.ResponseValue>() {

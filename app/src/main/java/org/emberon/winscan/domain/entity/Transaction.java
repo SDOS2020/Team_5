@@ -11,9 +11,14 @@ public class Transaction {
     private String payeeUpiId;
     private long amount;
     private Date transactionDate;
+    private transactionStatus currentStatus;
+
+    public enum transactionStatus {
+        SUCCESSFUL, CANCELLED, FAILED, PENDING;
+    }
 
     public Transaction(String id, String payerName, String payeeName, String payerUpiId,
-                       String payeeUpiId, long amount, Date transactionDate) {
+                       String payeeUpiId, long amount, Date transactionDate, transactionStatus currentStatus) {
         this.id = id;
         this.payerName = payerName;
         this.payeeName = payeeName;
@@ -21,6 +26,7 @@ public class Transaction {
         this.payeeUpiId = payeeUpiId;
         this.amount = amount;
         this.transactionDate = transactionDate;
+        this.currentStatus = currentStatus;
     }
 
     public String getId() {
@@ -78,4 +84,8 @@ public class Transaction {
     public void setTransactionDate(Date transactionDate) {
         this.transactionDate = transactionDate;
     }
+
+    public transactionStatus getCurrentStatus() { return currentStatus; }
+
+    public void setCurrentStatus(transactionStatus currentStatus) { this.currentStatus = currentStatus; }
 }
