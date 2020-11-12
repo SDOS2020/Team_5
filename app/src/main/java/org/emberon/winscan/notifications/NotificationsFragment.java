@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,19 +19,32 @@ import org.emberon.winscan.R;
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
+    WebView mywebview;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel =
                 new ViewModelProvider(this).get(NotificationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+          
             }
         });
+        mywebview = (WebView) root.findViewById(R.id.webView);
+        mywebview.setWebViewClient(new MyBrowser());
+        mywebview.getSettings().setLoadsImagesAutomatically(true);
+        mywebview.getSettings().setJavaScriptEnabled(true);
+        mywebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        mywebview.loadUrl("https://www.zomato.com/");
         return root;
+    }
+    private class MyBrowser extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
     }
 }
