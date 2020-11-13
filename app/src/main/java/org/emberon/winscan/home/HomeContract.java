@@ -15,7 +15,5 @@ public interface HomeContract {
     interface HomePresenter extends BasePresenter {
 
         void initiatePayment(String payeeName, String upiId, String amount, String remarks);
-
-        void onActivityResult(int requestCode, int resultCode, Intent data);
     }
 }
