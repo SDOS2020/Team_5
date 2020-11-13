@@ -13,6 +13,7 @@ import org.emberon.winscan.domain.entity.Transaction;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,11 +40,15 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerViewHol
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
+        DateFormat dateFormatDayMonth = new SimpleDateFormat("dd MMM");
+        DateFormat dateFormatYear = new SimpleDateFormat("yy");
         holder.getTransactionID().setText(transactionList.get(position).getId());
-        holder.getDateOfTransaction().setText(dateFormat.format(transactionList.get(position).getTransactionDate()));
+        Date transactionDate = transactionList.get(position).getTransactionDate();
+        holder.getDateOfTransaction().setText(dateFormatDayMonth.format(transactionDate)+"\'"+dateFormatYear.format(transactionDate));
         holder.getPayeeName().setText(transactionList.get(position).getPayeeName());
-        holder.getAmountPaid().setText(String.valueOf(transactionList.get(position).getAmount()));
+        holder.getAmountPaid().setText(String.valueOf(transactionList.get(position).getAmount()/100));
+        holder.getPayeeUpiId().setText(transactionList.get(position).getPayeeUpiId());
+        holder.getTransactionStatus().setText(transactionList.get(position).getCurrentStatus().toString());
     }
 
     @Override
