@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="org.emberon.winscan.home.HomeFragment"
+        android:name="org.emberon.winscan.home.ui.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="org.emberon.winscan.dashboard.DashboardFragment"
+        android:name="org.emberon.winscan.dashboard.ui.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
