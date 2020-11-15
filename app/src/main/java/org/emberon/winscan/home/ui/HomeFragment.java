@@ -39,10 +39,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
     public void onPayButtonClicked(View view) {
         presenter.initiatePayment(
-                binding.name.getEditText().getText().toString(),
-                binding.upiId.getEditText().getText().toString(),
-                binding.amount.getEditText().getText().toString(),
-                binding.remarks.getEditText().getText().toString());
+                binding.payeeName.getEditText().getText().toString(),
+                binding.payeeUpiId.getEditText().getText().toString(),
+                binding.payeeAmount.getEditText().getText().toString(),
+                binding.payeeMerchantID.getEditText().getText().toString(),
+                binding.payeeRemarks.getEditText().getText().toString());
     }
 
     @Override
