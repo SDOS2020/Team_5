@@ -7,12 +7,27 @@
     tools:context=".splash.ui.SplashActivity">
 
     <ImageView
+        android:id="@+id/imv_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/embereon_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/advent_pro_thin"
+        android:text="Win Cash"
+        android:textColor="@color/red_brother"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imv_logo" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
