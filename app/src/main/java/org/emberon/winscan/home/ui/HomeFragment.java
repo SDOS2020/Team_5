@@ -3,7 +3,9 @@ package org.emberon.winscan.home.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,10 +73,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                 if (result != null) {
                     AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
                     alertDialog.setTitle("Scan Error");
-                    alertDialog.setMessage("QR Code could not be scanned");
+                    alertDialog.setMessage("QR Code could not be scanned!");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> dialog.dismiss());
                     alertDialog.show();
+                    binding.payeeName.getEditText().getText().clear();
+                    binding.payeeUpiId.getEditText().getText().clear();
                 }
 
             } else {
@@ -82,14 +86,29 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                     return;
                 //Getting the passed result
                 String result = data.getStringExtra("com.blikoon.qrcodescanner.got_qr_scan_relult");
-                showToast("Have scan result in your app activity :" + result);
-                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                alertDialog.setTitle("Scan result");
-                alertDialog.setMessage(result);
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        (dialog, which) -> dialog.dismiss());
-                alertDialog.show();
-
+                Uri resultUri = Uri.parse(result);
+                String payeeUpiIdQR = resultUri.getQueryParameter("pa");
+                String payeeNameQR = resultUri.getQueryParameter("pn");
+                if ((TextUtils.isEmpty(payeeNameQR) || (TextUtils.isEmpty(payeeUpiIdQR)))) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                    alertDialog.setTitle("Scan Error");
+                    alertDialog.setMessage("Invalid QR Code!");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            (dialog, which) -> dialog.dismiss());
+                    alertDialog.show();
+                    binding.payeeName.getEditText().getText().clear();
+                    binding.payeeUpiId.getEditText().getText().clear();
+                }
+                else {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setTitle("Scan result");
+                    alertDialog.setMessage("Name: " + payeeNameQR + "\n" + "UPI ID: " + payeeUpiIdQR);
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            (dialog, which) -> dialog.dismiss());
+                    alertDialog.show();
+                    binding.payeeName.getEditText().setText(payeeNameQR);
+                    binding.payeeUpiId.getEditText().setText(payeeUpiIdQR);
+                }
             }
         }
     }
