@@ -36,15 +36,20 @@ android {
 }
 
 dependencies {
-    //UPI Payment Library
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // UPI Payment Library
     implementation 'com.shreyaspatil:EasyUpiPayment:3.0.1'
-    //Google Vision Library
-    implementation 'com.google.android.gms:play-services-vision:15.0.2'
-//    implementation 'com.github.maayyaannkk:Scanner:1.0.0'
-    implementation 'me.sudar:zxing-orient:2.1.1@aar'
+
+    // Google Vision Library
+    implementation 'com.google.android.gms:play-services-vision:20.1.2'
+
+    // QR Scanner
+    implementation project(':qrcodescanner')
+
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.navigation:navigation-fragment:2.3.1'
     implementation 'androidx.navigation:navigation-ui:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
@@ -54,10 +59,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation platform('com.google.firebase:firebase-bom:25.12.0')
-    implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
-    implementation 'com.google.firebase:firebase-auth:19.4.0'
-    implementation 'com.google.firebase:firebase-firestore:21.7.1'
+    implementation 'com.google.firebase:firebase-auth:20.0.1'
+    implementation 'com.google.firebase:firebase-firestore:22.0.0'
     implementation 'com.android.support:multidex:1.0.3'
 
     // dagger 2.0
