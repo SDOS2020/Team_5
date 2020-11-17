@@ -36,8 +36,12 @@ android {
 }
 
 dependencies {
-
+    //UPI Payment Library
     implementation 'com.shreyaspatil:EasyUpiPayment:3.0.1'
+    //Google Vision Library
+    implementation 'com.google.android.gms:play-services-vision:15.0.2'
+//    implementation 'com.github.maayyaannkk:Scanner:1.0.0'
+    implementation 'me.sudar:zxing-orient:2.1.1@aar'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
