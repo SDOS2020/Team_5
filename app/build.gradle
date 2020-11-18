@@ -44,8 +44,11 @@ dependencies {
     // Google Vision Library
     implementation 'com.google.android.gms:play-services-vision:20.1.2'
 
-    // QR Scanner
+    // QR Scanner Library
     implementation project(':qrcodescanner')
+
+    // WebView Library
+    implementation 'com.thefinestartist:finestwebview:1.2.7'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
