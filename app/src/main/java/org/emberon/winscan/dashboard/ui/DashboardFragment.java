@@ -33,9 +33,9 @@ public class DashboardFragment extends Fragment implements DashboardContract.Das
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         presenter.attachView(this);
-        binding.trasactionView.setHasFixedSize(true);
-        binding.trasactionView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
-        binding.trasactionView.setAdapter(adapter);
+        binding.transactionView.setHasFixedSize(true);
+        binding.transactionView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
+        binding.transactionView.setAdapter(adapter);
         adapter.setTransactionList(presenter.getTransactionList());
 
         return binding.getRoot();

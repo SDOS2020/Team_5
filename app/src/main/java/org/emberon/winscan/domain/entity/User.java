@@ -7,6 +7,7 @@ public class User {
 
     private String id;
     private List<Transaction> transactions = new ArrayList<>();
+    private  List<Rewards> rewards = new ArrayList<>();
 
     public User() {
     }
@@ -29,5 +30,13 @@ public class User {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public List<Rewards> getRewards() {
+        return rewards;
+    }
+
+    public void setRewards(List<Rewards> rewards) {
+        this.rewards = rewards;
     }
 }
