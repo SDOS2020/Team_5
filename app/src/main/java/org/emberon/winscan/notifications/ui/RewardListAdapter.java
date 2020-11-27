@@ -8,16 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.emberon.winscan.R;
-import org.emberon.winscan.notifications.ui.RecyclerViewHolder;
+import org.emberon.winscan.domain.entity.Rewards;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
 
 public class RewardListAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
 
-    private List<String> rewardsList = new ArrayList<>();
+    private List<Rewards> rewardsList = new ArrayList<>();
     private RewardsListListener rewardsListListener;
 
     @Inject
@@ -39,13 +38,15 @@ public class RewardListAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        holder.getCashBackAmount().setText(rewardsList.get(position));
+        holder.getCashBackAmount().setText(String.valueOf(rewardsList.get(position).getValue()));
+        holder.getCashBackCompany().setText(String.valueOf(rewardsList.get(position).getCompany()));
+        holder.getCashBackStatus().setText(String.valueOf(rewardsList.get(position).getCurrentStatus()));
     }
 
     @Override
     public int getItemCount() { return rewardsList.size(); }
 
-    public void setRewardsList(List<String> rewardsList) {
+    public void setRewardsList(List<Rewards> rewardsList) {
         this.rewardsList = rewardsList;
     }
 

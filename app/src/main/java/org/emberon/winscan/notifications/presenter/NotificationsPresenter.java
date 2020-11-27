@@ -6,9 +6,12 @@ import android.content.Context;
 import org.emberon.winscan.base.BaseView;
 import org.emberon.winscan.base.UseCaseHandler;
 import org.emberon.winscan.data.local.LocalRepository;
+import org.emberon.winscan.domain.entity.Rewards;
 import org.emberon.winscan.domain.usecase.UpdateUser;
 import org.emberon.winscan.injection.ActivityContext;
 import org.emberon.winscan.notifications.NotificationsContract;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,5 +39,10 @@ public class NotificationsPresenter implements NotificationsContract.Notificatio
     @Override
     public void attachView(BaseView baseView) {
         view = (NotificationsContract.NotificationsView) baseView;
+    }
+
+    @Override
+    public List<Rewards> getRewardsList() {
+        return localRepository.getUser().getRewards();
     }
 }
