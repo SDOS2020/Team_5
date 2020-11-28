@@ -1,5 +1,6 @@
 package org.emberon.winscan.home.ui;
 
+import org.emberon.winscan.CashBackEngineService;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -25,8 +26,6 @@ import org.emberon.winscan.home.HomeContract;
 import org.emberon.winscan.home.presenter.HomePresenter;
 import org.emberon.winscan.util.Utils;
 
-import java.util.Random;
-
 import javax.inject.Inject;
 
 public class HomeFragment extends BaseFragment implements HomeContract.HomeView {
@@ -36,7 +35,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     @Inject
     HomePresenter presenter;
     private FragmentHomeBinding binding;
-
+    private CashBackEngineService cashbackGenerator;
     private static final int REQUEST_CODE_QR_SCAN = 101;
 
     @Override
@@ -54,8 +53,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         binding.buttonQR.setOnClickListener(this::onQRButtonClicked);
 
         if (shouldShowReward) {
-            Random random = new Random();
-            cashBackAmount = random.nextInt(100);
+            cashbackGenerator = new CashBackEngineService();
+            cashBackAmount = cashbackGenerator.getCashBack();
             AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
             alertDialog.setTitle("Reward!!!!");
             alertDialog.setMessage("Congratulations you have won " + cashBackAmount);
