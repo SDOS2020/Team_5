@@ -15,10 +15,14 @@ import com.thefinestartist.finestwebview.FinestWebView;
 import com.thefinestartist.finestwebview.listeners.WebViewListener;
 
 import org.emberon.winscan.base.BaseActivity;
+import org.emberon.winscan.base.UseCase;
 import org.emberon.winscan.databinding.FragmentNotificationsBinding;
 import org.emberon.winscan.domain.entity.Rewards;
+import org.emberon.winscan.domain.entity.User;
+import org.emberon.winscan.domain.usecase.UpdateUser;
 import org.emberon.winscan.notifications.NotificationsContract;
 import org.emberon.winscan.notifications.presenter.NotificationsPresenter;
+import org.emberon.winscan.util.DebugUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +62,7 @@ public class NotificationsFragment extends Fragment implements NotificationsCont
     @Override
     public void onRewardClick(int position) {
         if (rewardsList.get(position).getCurrentStatus() == Rewards.rewardStatus.UNCLAIMED) {
+            presenter.updateRewardStatus(rewardsList.get(position));
             Toast.makeText(binding.getRoot().getContext(), rewardsList.get(position).getCompany(), Toast.LENGTH_SHORT).show();
             new FinestWebView.Builder(binding.getRoot().getContext()).addWebViewListener(new WebViewListener() {
                 @Override
