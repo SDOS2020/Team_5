@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 
 import org.emberon.winscan.base.BaseView;
+import org.emberon.winscan.base.UseCase;
 import org.emberon.winscan.base.UseCaseHandler;
 import org.emberon.winscan.data.local.LocalRepository;
 import org.emberon.winscan.domain.entity.Rewards;
+import org.emberon.winscan.domain.entity.User;
 import org.emberon.winscan.domain.usecase.UpdateUser;
 import org.emberon.winscan.injection.ActivityContext;
 import org.emberon.winscan.notifications.NotificationsContract;
+import org.emberon.winscan.util.DebugUtil;
 
 import java.util.List;
 
@@ -44,5 +47,26 @@ public class NotificationsPresenter implements NotificationsContract.Notificatio
     @Override
     public List<Rewards> getRewardsList() {
         return localRepository.getUser().getRewards();
+    }
+
+
+    public void updateRewards(String company, int amount, Rewards.rewardStatus rewardStatus) {
+        DebugUtil.log("updateRewards");
+        final User user = localRepository.getUser();
+        final List<Rewards> rewards = user.getRewards();
+        rewards.add(new Rewards(company, amount, rewardStatus));
+        localRepository.saveUser(user);
+        useCaseHandler.execute(updateUserUseCase, new UpdateUser.RequestValues(user),
+                new UseCase.UseCaseCallback<UpdateUser.ResponseValue>() {
+                    @Override
+                    public void onSuccess(UpdateUser.ResponseValue response) {
+
+                    }
+
+                    @Override
+                    public void onError(String message) {
+
+                    }
+                });
     }
 }
