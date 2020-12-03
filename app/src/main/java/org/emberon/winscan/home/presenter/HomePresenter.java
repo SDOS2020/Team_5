@@ -168,6 +168,10 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
         transactions.add(new Transaction(transactionId, "Payee Name Here", payeeName,
                 "Payer Name Here", payeeUpiId, (long) (Double.parseDouble(amount) * 100),
                 new Date(), currentStatus));
+        updateUser(user);
+    }
+
+    private void updateUser(User user) {
         localRepository.saveUser(user);
         useCaseHandler.execute(updateUserUseCase, new UpdateUser.RequestValues(user),
                 new UseCase.UseCaseCallback<UpdateUser.ResponseValue>() {
