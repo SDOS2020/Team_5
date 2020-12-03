@@ -15,7 +15,6 @@ public interface NotificationsContract {
 
     interface NotificationsPresenter extends BasePresenter {
         List<Rewards> getRewardsList();
-
-        void updateRewardStatus(String company, int amount, Rewards.rewardStatus rewardStatus);
+        public void updateRewards(String company, int amount, Rewards.rewardStatus rewardStatus);
     }
 }

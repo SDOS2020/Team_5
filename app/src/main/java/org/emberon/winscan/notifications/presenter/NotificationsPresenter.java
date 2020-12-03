@@ -49,7 +49,11 @@ public class NotificationsPresenter implements NotificationsContract.Notificatio
         return localRepository.getUser().getRewards();
     }
 
-    private void updateUser(User user) {
+    public void updateRewards(String company, int amount, Rewards.rewardStatus rewardStatus) {
+        DebugUtil.log("updateRewards");
+        final User user = localRepository.getUser();
+        final List<Rewards> rewards = user.getRewards();
+        rewards.add(new Rewards(company, amount, rewardStatus));
         localRepository.saveUser(user);
         useCaseHandler.execute(updateUserUseCase, new UpdateUser.RequestValues(user),
                 new UseCase.UseCaseCallback<UpdateUser.ResponseValue>() {
@@ -63,10 +67,5 @@ public class NotificationsPresenter implements NotificationsContract.Notificatio
 
                     }
                 });
-    }
-
-    @Override
-    public void updateRewardStatus(Rewards rewards) {
-
     }
 }

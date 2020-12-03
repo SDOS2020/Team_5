@@ -1,10 +1,10 @@
 package org.emberon.winscan.home.ui;
 
-import org.emberon.winscan.CashBackEngineService;
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,12 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.blikoon.qrcodescanner.QrCodeActivity;
-import com.thefinestartist.finestwebview.FinestWebView;
-import com.thefinestartist.finestwebview.listeners.WebViewListener;
-
-import org.emberon.winscan.domain.entity.Rewards;
 import org.emberon.winscan.base.BaseActivity;
 import org.emberon.winscan.base.BaseFragment;
 import org.emberon.winscan.databinding.FragmentHomeBinding;
@@ -30,12 +27,9 @@ import javax.inject.Inject;
 
 public class HomeFragment extends BaseFragment implements HomeContract.HomeView {
 
-    private static boolean shouldShowReward = true;
-    private int cashBackAmount = 0;
     @Inject
     HomePresenter presenter;
     private FragmentHomeBinding binding;
-    private CashBackEngineService cashbackGenerator;
     private static final int REQUEST_CODE_QR_SCAN = 101;
 
     @Override
@@ -52,18 +46,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         binding.buttonPay.setOnClickListener(this::onPayButtonClicked);
         binding.buttonQR.setOnClickListener(this::onQRButtonClicked);
 
-        if (shouldShowReward) {
-            cashbackGenerator = new CashBackEngineService();
-            cashBackAmount = cashbackGenerator.getCashBack();
-            AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-            alertDialog.setTitle("Reward!!!!");
-            alertDialog.setMessage("Congratulations you have won " + cashBackAmount);
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",this::addReward);
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Claim", this::claimReward);
-            alertDialog.show();
-            binding.payeeName.getEditText().getText().clear();
-            binding.payeeUpiId.getEditText().getText().clear();
-        }
         return binding.getRoot();
     }
 
@@ -77,28 +59,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     }
 
     public void onQRButtonClicked(View view) {
-        Intent i = new Intent(getActivity(), QrCodeActivity.class);
-        startActivityForResult(i, REQUEST_CODE_QR_SCAN);
-    }
 
-    private void claimReward(DialogInterface dialogInterface, int i) {
-        showToast("Reward Claimed");
-        presenter.updateRewards("Zomato", cashBackAmount, Rewards.rewardStatus.CLAIMED);
-        showToast("ZOMATO");
-        new FinestWebView.Builder(binding.getRoot().getContext()).addWebViewListener(new WebViewListener() {
-            @Override
-            public void onPageStarted(String url) {
-                System.out.println("REWARD" + url);
-                super.onPageStarted(url);
-            }
-        }).show("https://www.zomato.com/");
-        shouldShowReward = false;
-    }
-
-    private void addReward(DialogInterface dialogInterface, int i) {
-        showToast("Reward Added");
-        presenter.updateRewards("Zomato", cashBackAmount, Rewards.rewardStatus.UNCLAIMED);
-        shouldShowReward = false;
+        if (ContextCompat.checkSelfPermission(binding.getRoot().getContext(), Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED) {
+            Intent i = new Intent(getActivity(), QrCodeActivity.class);
+            startActivityForResult(i, REQUEST_CODE_QR_SCAN);
+        }
+        else
+            showToast("Please allow access to camera!");
     }
 
     @Override

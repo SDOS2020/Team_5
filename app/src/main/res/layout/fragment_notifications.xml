@@ -6,26 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".notifications.ui.NotificationsFragment">
 
-<!--    <Button-->
-<!--        android:id="@+id/button"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="195dp"-->
-<!--        android:layout_marginTop="363dp"-->
-<!--        android:layout_marginEnd="123dp"-->
-<!--        android:layout_marginBottom="320dp"-->
-<!--        android:text="Button"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rewardsView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent=".5"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.81" />
+
+    <Button
+        android:id="@+id/button_reward_QR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Claim Reward"
+        app:layout_constraintBottom_toTopOf="@+id/rewardsView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_noReward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Rewards"
+        app:layout_constraintBottom_toBottomOf="@+id/rewardsView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/rewardsView"
+        app:layout_constraintTop_toTopOf="@+id/rewardsView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
