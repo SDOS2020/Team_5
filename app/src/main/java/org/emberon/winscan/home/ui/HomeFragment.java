@@ -87,6 +87,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                     alertDialog.show();
                     binding.payeeName.getEditText().getText().clear();
                     binding.payeeUpiId.getEditText().getText().clear();
+                    binding.payeeMerchantID.getEditText().getText().clear();
                 }
 
             } else {
@@ -97,7 +98,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                 Uri resultUri = Uri.parse(result);
                 String payeeUpiIdQR = resultUri.getQueryParameter("pa");
                 String payeeNameQR = resultUri.getQueryParameter("pn");
-                if ((TextUtils.isEmpty(payeeNameQR) || (TextUtils.isEmpty(payeeUpiIdQR)))) {
+                String payeeMerchantIdQR = resultUri.getQueryParameter("mc");
+                if (TextUtils.isEmpty(payeeNameQR) || TextUtils.isEmpty(payeeUpiIdQR) || TextUtils.isEmpty(payeeMerchantIdQR)) {
                     AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
                     alertDialog.setTitle("Scan Error");
                     alertDialog.setMessage("Invalid QR Code!");
@@ -106,16 +108,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                     alertDialog.show();
                     binding.payeeName.getEditText().getText().clear();
                     binding.payeeUpiId.getEditText().getText().clear();
+                    binding.payeeMerchantID.getEditText().getText().clear();
                 }
                 else {
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                     alertDialog.setTitle("Scan result");
-                    alertDialog.setMessage("Name: " + payeeNameQR + "\n" + "UPI ID: " + payeeUpiIdQR);
+                    alertDialog.setMessage("Name: " + payeeNameQR + "\n" + "UPI ID: " + payeeUpiIdQR + "\n" + "Merchant ID: " + payeeMerchantIdQR);
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> dialog.dismiss());
                     alertDialog.show();
                     binding.payeeName.getEditText().setText(payeeNameQR);
                     binding.payeeUpiId.getEditText().setText(payeeUpiIdQR);
+                    binding.payeeMerchantID.getEditText().setText(payeeMerchantIdQR);
                 }
             }
         }
