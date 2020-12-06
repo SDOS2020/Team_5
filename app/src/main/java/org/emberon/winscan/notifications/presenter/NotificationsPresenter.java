@@ -49,7 +49,6 @@ public class NotificationsPresenter implements NotificationsContract.Notificatio
         return localRepository.getUser().getRewards();
     }
 
-
     public void updateRewards(String company, int amount, Rewards.rewardStatus rewardStatus) {
         DebugUtil.log("updateRewards");
         final User user = localRepository.getUser();

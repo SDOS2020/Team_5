@@ -25,11 +25,16 @@ import com.thefinestartist.finestwebview.listeners.WebViewListener;
 
 import org.emberon.winscan.CashBackEngineService;
 import org.emberon.winscan.base.BaseActivity;
+import org.emberon.winscan.base.UseCase;
 import org.emberon.winscan.databinding.FragmentNotificationsBinding;
 import org.emberon.winscan.domain.entity.Rewards;
+import org.emberon.winscan.domain.entity.User;
+import org.emberon.winscan.domain.usecase.UpdateUser;
 import org.emberon.winscan.notifications.NotificationsContract;
 import org.emberon.winscan.notifications.presenter.NotificationsPresenter;
 import org.emberon.winscan.util.Utils;
+import org.emberon.winscan.util.DebugUtil;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
