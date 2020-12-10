@@ -89,4 +89,9 @@ public class NotificationsPresenter implements NotificationsContract.Notificatio
                     }
                 });
     }
+
+    @Override
+    public void notifyServer(Rewards rewards) {
+        // TODO :: call server api
+    }
 }

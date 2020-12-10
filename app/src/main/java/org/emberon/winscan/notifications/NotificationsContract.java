@@ -18,5 +18,7 @@ public interface NotificationsContract {
         public void updateRewards(String company, int amount, Rewards.rewardStatus rewardStatus);
 
         void updateRewards(int position, Rewards.rewardStatus claimed);
+
+        void notifyServer(Rewards rewards);
     }
 }

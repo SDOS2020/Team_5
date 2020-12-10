@@ -100,6 +100,7 @@ public class NotificationsFragment extends Fragment implements NotificationsCont
             adapter.setRewardsList(rewardsList);
             adapter.notifyDataSetChanged();
             createWebview(websites.get(rewardsList.get(position).getCompany()));
+            presenter.notifyServer(rewardsList.get(position));
         }
     }
 
@@ -137,6 +138,7 @@ public class NotificationsFragment extends Fragment implements NotificationsCont
         adapter.setRewardsList(rewardsList);
         adapter.notifyDataSetChanged();
         createWebview(websites.get(rewardGeneratedCompany));
+        presenter.notifyServer(new Rewards(rewardGeneratedCompany, cashBackAmount, Rewards.rewardStatus.CLAIMED));
     }
 
     private void addReward(DialogInterface dialogInterface, int i) {
