@@ -6,26 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".dashboard.ui.DashboardFragment">
 
-    <TextView
-        android:id="@+id/text_dashboard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/trasactionView"
+        android:id="@+id/transactionView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent=".8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/textView_noTransaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Transactions"
+        app:layout_constraintBottom_toBottomOf="@+id/transactionView"
+        app:layout_constraintEnd_toEndOf="@+id/transactionView"
+        app:layout_constraintStart_toStartOf="@+id/transactionView"
+        app:layout_constraintTop_toTopOf="@+id/transactionView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

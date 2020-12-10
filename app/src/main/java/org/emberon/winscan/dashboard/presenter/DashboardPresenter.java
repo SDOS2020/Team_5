@@ -15,7 +15,6 @@ import javax.inject.Inject;
 
 public class DashboardPresenter implements DashboardContract.DashboardPresenter {
 
-    private final static int UPI_PAYMENT = 123;
     private final @ActivityContext
     Context context;
     private final Activity activity;

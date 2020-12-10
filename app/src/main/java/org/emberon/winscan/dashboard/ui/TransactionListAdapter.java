@@ -39,11 +39,14 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerViewHol
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
-        holder.getTransactionID().setText(transactionList.get(position).getId());
-        holder.getDateOfTransaction().setText(dateFormat.format(transactionList.get(position).getTransactionDate()));
+
+        DateFormat dateFormatDayMonth = new SimpleDateFormat("dd MMM");
+        DateFormat dateFormatYear = new SimpleDateFormat("yy");
+        Date transactionDate = transactionList.get(position).getTransactionDate();
+        holder.getDateOfTransaction().setText(dateFormatDayMonth.format(transactionDate)+"\'"+dateFormatYear.format(transactionDate));
         holder.getPayeeName().setText(transactionList.get(position).getPayeeName());
-        holder.getAmountPaid().setText(String.valueOf(transactionList.get(position).getAmount()));
+        holder.getAmountPaid().setText("₹" + String.valueOf(transactionList.get(position).getAmount()/100));
+        holder.getTransactionStatus().setText(transactionList.get(position).getCurrentStatus().toString());
     }
 
     @Override

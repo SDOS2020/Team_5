@@ -5,6 +5,7 @@ import org.emberon.winscan.home.ui.HomeFragment;
 import org.emberon.winscan.injection.PerActivity;
 import org.emberon.winscan.injection.module.ActivityModule;
 import org.emberon.winscan.main.MainActivity;
+import org.emberon.winscan.notifications.ui.NotificationsFragment;
 import org.emberon.winscan.splash.ui.SplashActivity;
 
 import dagger.Component;
@@ -23,4 +24,5 @@ public interface ActivityComponent {
 
     void inject(DashboardFragment dashboardFragment);
 
+    void inject(NotificationsFragment notificationsFragment);
 }

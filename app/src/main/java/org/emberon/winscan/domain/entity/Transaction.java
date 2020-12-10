@@ -17,8 +17,13 @@ public class Transaction {
         SUCCESSFUL, CANCELLED, FAILED, PENDING;
     }
 
+    public Transaction() {
+
+    }
+
     public Transaction(String id, String payerName, String payeeName, String payerUpiId,
-                       String payeeUpiId, long amount, Date transactionDate, transactionStatus currentStatus) {
+                       String payeeUpiId, long amount, Date transactionDate,
+                       transactionStatus currentStatus) {
         this.id = id;
         this.payerName = payerName;
         this.payeeName = payeeName;
@@ -85,7 +90,11 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
-    public transactionStatus getCurrentStatus() { return currentStatus; }
+    public transactionStatus getCurrentStatus() {
+        return currentStatus;
+    }
 
-    public void setCurrentStatus(transactionStatus currentStatus) { this.currentStatus = currentStatus; }
+    public void setCurrentStatus(transactionStatus currentStatus) {
+        this.currentStatus = currentStatus;
+    }
 }

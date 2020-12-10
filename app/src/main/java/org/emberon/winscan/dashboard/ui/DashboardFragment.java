@@ -13,10 +13,15 @@ import org.emberon.winscan.base.BaseActivity;
 import org.emberon.winscan.dashboard.DashboardContract;
 import org.emberon.winscan.dashboard.presenter.DashboardPresenter;
 import org.emberon.winscan.databinding.FragmentDashboardBinding;
+import org.emberon.winscan.domain.entity.Transaction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class DashboardFragment extends Fragment implements DashboardContract.DashboardView {
+    private List<Transaction> transactionList = new ArrayList<>();
     @Inject
     DashboardPresenter presenter;
     @Inject
@@ -33,10 +38,19 @@ public class DashboardFragment extends Fragment implements DashboardContract.Das
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         presenter.attachView(this);
-        binding.trasactionView.setHasFixedSize(true);
-        binding.trasactionView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
-        binding.trasactionView.setAdapter(adapter);
-        adapter.setTransactionList(presenter.getTransactionList());
+        transactionList = presenter.getTransactionList();
+        binding.transactionView.setHasFixedSize(true);
+        binding.transactionView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
+        binding.transactionView.setAdapter(adapter);
+        adapter.setTransactionList(transactionList);
+        if (transactionList.isEmpty()) {
+            binding.textViewNoTransaction.setVisibility(View.VISIBLE);
+            binding.transactionView.setVisibility(View.INVISIBLE);
+        }
+        else {
+            binding.textViewNoTransaction.setVisibility(View.INVISIBLE);
+            binding.transactionView.setVisibility(View.VISIBLE);
+        }
 
         return binding.getRoot();
     }

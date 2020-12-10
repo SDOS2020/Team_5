@@ -14,6 +14,7 @@ import org.emberon.winscan.base.BaseView;
 import org.emberon.winscan.base.UseCase;
 import org.emberon.winscan.base.UseCaseHandler;
 import org.emberon.winscan.data.local.LocalRepository;
+import org.emberon.winscan.domain.entity.Rewards;
 import org.emberon.winscan.domain.entity.Transaction;
 import org.emberon.winscan.domain.entity.User;
 import org.emberon.winscan.domain.usecase.UpdateUser;
@@ -41,6 +42,7 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
     private String payeeUpiId;
     private String transactionId;
     private String transactionRefId;
+    private String payeeMerchantCode;
     private String amount;
     private String remarks;
 
@@ -61,14 +63,17 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
     }
 
     @Override
-    public void initiatePayment(String payeeName, String upiId, String amount, String remarks) {
+    public void initiatePayment(String payeeName, String upiId, String amount, String payeeMerchantCode, String remarks) {
         if (TextUtils.isEmpty(payeeName)) {
-            view.showToast("Name is invalid");
+            view.showToast("Name is invalid.");
         } else if (TextUtils.isEmpty(upiId)) {
-            view.showToast("UPI ID is invalid");
+            view.showToast("UPI ID is invalid.");
         } else if (TextUtils.isEmpty(amount)) {
-            view.showToast("Amount is invalid");
-            Toast.makeText(context, " Amount is invalid", Toast.LENGTH_SHORT).show();
+            view.showToast("Amount is invalid.");
+        } else if (TextUtils.isEmpty(payeeMerchantCode)) {
+            view.showToast("Merchant ID is invalid.");
+        } else if (TextUtils.isEmpty(remarks)) {
+            view.showToast("Please enter valid remarks.");
         } else {
             if (!amount.contains("."))
                 amount = amount + ".00";
@@ -78,13 +83,14 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
             this.transactionId = tid;
             this.transactionRefId = tid;
             this.amount = amount;
+            this.payeeMerchantCode = payeeMerchantCode;
             this.remarks = remarks;
-            payViaUpi(payeeName, upiId, tid, tid, amount, remarks);
+            payViaUpi(payeeName, upiId, tid, tid, amount, payeeMerchantCode,remarks);
         }
     }
 
     private void payViaUpi(String name, String upiId, String transactionId,
-                           String transactionRefId, String amount, String remarks) {
+                           String transactionRefId, String amount, String payeeMerchantCode,String remarks) {
         try {
             // Build instance
             EasyUpiPayment.Builder builder = new EasyUpiPayment.Builder(activity)
@@ -93,6 +99,7 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
                     .setPayeeName(name)
                     .setTransactionId(transactionId)
                     .setTransactionRefId(transactionRefId)
+                    .setPayeeMerchantCode(payeeMerchantCode)
                     .setDescription(remarks)
                     .setAmount(amount);
 
@@ -161,6 +168,10 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
         transactions.add(new Transaction(transactionId, "Payee Name Here", payeeName,
                 "Payer Name Here", payeeUpiId, (long) (Double.parseDouble(amount) * 100),
                 new Date(), currentStatus));
+        updateUser(user);
+    }
+
+    private void updateUser(User user) {
         localRepository.saveUser(user);
         useCaseHandler.execute(updateUserUseCase, new UpdateUser.RequestValues(user),
                 new UseCase.UseCaseCallback<UpdateUser.ResponseValue>() {
@@ -175,5 +186,4 @@ public class HomePresenter implements HomeContract.HomePresenter, PaymentStatusL
                     }
                 });
     }
-
 }
