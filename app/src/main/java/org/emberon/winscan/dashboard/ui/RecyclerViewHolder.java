@@ -14,12 +14,14 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
     private final TextView payeeName;
     private final TextView amountPaid;
     private final TextView transactionStatus;
+
     public RecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
         dateOfTransaction = itemView.findViewById(R.id.dateOfTransaction);
         payeeName = itemView.findViewById(R.id.payeeName);
         amountPaid = itemView.findViewById(R.id.amountPaid);
         transactionStatus = itemView.findViewById(R.id.transactionStatus);
+
     }
 
     public TextView getDateOfTransaction(){

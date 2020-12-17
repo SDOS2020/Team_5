@@ -13,7 +13,6 @@ import org.emberon.winscan.domain.entity.Transaction;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -40,6 +39,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerViewHol
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+
         DateFormat dateFormatDayMonth = new SimpleDateFormat("dd MMM");
         DateFormat dateFormatYear = new SimpleDateFormat("yy");
         Date transactionDate = transactionList.get(position).getTransactionDate();

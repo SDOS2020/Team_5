@@ -68,4 +68,30 @@ public class NotificationsPresenter implements NotificationsContract.Notificatio
                     }
                 });
     }
+
+    @Override
+    public void updateRewards(int position, Rewards.rewardStatus claimed) {
+        DebugUtil.log("updateRewards");
+        final User user = localRepository.getUser();
+        final List<Rewards> rewards = user.getRewards();
+        rewards.get(position).setCurrentStatus(claimed);
+        localRepository.saveUser(user);
+        useCaseHandler.execute(updateUserUseCase, new UpdateUser.RequestValues(user),
+                new UseCase.UseCaseCallback<UpdateUser.ResponseValue>() {
+                    @Override
+                    public void onSuccess(UpdateUser.ResponseValue response) {
+
+                    }
+
+                    @Override
+                    public void onError(String message) {
+
+                    }
+                });
+    }
+
+    @Override
+    public void notifyServer(Rewards rewards) {
+        // TODO :: call server api
+    }
 }

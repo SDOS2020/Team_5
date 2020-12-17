@@ -25,16 +25,11 @@ import com.thefinestartist.finestwebview.listeners.WebViewListener;
 
 import org.emberon.winscan.CashBackEngineService;
 import org.emberon.winscan.base.BaseActivity;
-import org.emberon.winscan.base.UseCase;
 import org.emberon.winscan.databinding.FragmentNotificationsBinding;
 import org.emberon.winscan.domain.entity.Rewards;
-import org.emberon.winscan.domain.entity.User;
-import org.emberon.winscan.domain.usecase.UpdateUser;
 import org.emberon.winscan.notifications.NotificationsContract;
 import org.emberon.winscan.notifications.presenter.NotificationsPresenter;
 import org.emberon.winscan.util.Utils;
-import org.emberon.winscan.util.DebugUtil;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +53,8 @@ public class NotificationsFragment extends Fragment implements NotificationsCont
     NotificationsPresenter presenter;
     @Inject
     RewardListAdapter adapter;
-    private @NonNull FragmentNotificationsBinding binding;
+    private @NonNull
+    FragmentNotificationsBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,8 +76,7 @@ public class NotificationsFragment extends Fragment implements NotificationsCont
         if (rewardsList.isEmpty()) {
             binding.textViewNoReward.setVisibility(View.VISIBLE);
             binding.rewardsView.setVisibility(View.INVISIBLE);
-        }
-        else {
+        } else {
             binding.textViewNoReward.setVisibility(View.INVISIBLE);
             binding.rewardsView.setVisibility(View.VISIBLE);
         }
@@ -99,17 +94,23 @@ public class NotificationsFragment extends Fragment implements NotificationsCont
 
     @Override
     public void onRewardClick(int position) {
-        if (rewardsList.get(position).getCurrentStatus() == Rewards.rewardStatus.UNCLAIMED)
+        if (rewardsList.get(position).getCurrentStatus() == Rewards.rewardStatus.UNCLAIMED) {
+            presenter.updateRewards(position, Rewards.rewardStatus.CLAIMED);
+            rewardsList = presenter.getRewardsList();
+            adapter.setRewardsList(rewardsList);
+            adapter.notifyDataSetChanged();
             createWebview(websites.get(rewardsList.get(position).getCompany()));
+            presenter.notifyServer(rewardsList.get(position));
+        }
     }
 
     public void onRewardQRButtonClicked(View view) {
-        if (ContextCompat.checkSelfPermission(binding.getRoot().getContext(), Manifest.permission.CAMERA)
+        if (ContextCompat.checkSelfPermission(binding.getRoot().getContext(),
+                Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
             Intent i = new Intent(getActivity(), QrCodeActivity.class);
             startActivityForResult(i, REQUEST_CODE_QR_SCAN);
-        }
-        else
+        } else
             showToast("Please allow access to camera!");
     }
 
@@ -122,24 +123,28 @@ public class NotificationsFragment extends Fragment implements NotificationsCont
         cashBackAmount = cashbackGenerator.getCashBack();
         AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
         alertDialog.setTitle("Reward!!!!");
-        alertDialog.setMessage("Congratulations you have won Rs" + cashBackAmount +" cashback from "+ rewardCompany);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",this::addReward);
+        alertDialog.setMessage("Congratulations you have won Rs" + cashBackAmount + " cashback " +
+                "from " + rewardCompany);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", this::addReward);
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Claim", this::claimReward);
         alertDialog.show();
     }
 
     private void claimReward(DialogInterface dialogInterface, int i) {
         showToast("Reward Claimed");
-        presenter.updateRewards(rewardGeneratedCompany, cashBackAmount, Rewards.rewardStatus.CLAIMED);
+        presenter.updateRewards(rewardGeneratedCompany, cashBackAmount,
+                Rewards.rewardStatus.CLAIMED);
         rewardsList = presenter.getRewardsList();
         adapter.setRewardsList(rewardsList);
         adapter.notifyDataSetChanged();
         createWebview(websites.get(rewardGeneratedCompany));
+        presenter.notifyServer(new Rewards(rewardGeneratedCompany, cashBackAmount, Rewards.rewardStatus.CLAIMED));
     }
 
     private void addReward(DialogInterface dialogInterface, int i) {
         showToast("Reward Added");
-        presenter.updateRewards(rewardGeneratedCompany, cashBackAmount, Rewards.rewardStatus.UNCLAIMED);
+        presenter.updateRewards(rewardGeneratedCompany, cashBackAmount,
+                Rewards.rewardStatus.UNCLAIMED);
         rewardsList = presenter.getRewardsList();
         adapter.setRewardsList(rewardsList);
         adapter.notifyDataSetChanged();
@@ -178,13 +183,13 @@ public class NotificationsFragment extends Fragment implements NotificationsCont
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> dialog.dismiss());
                     alertDialog.show();
-                }
-                else {
+                } else {
                     generateReward(rewardCompany);
                 }
             }
         }
     }
+
     public void showToast(String message) {
         Utils.showToast(message);
     }
