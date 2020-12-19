@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="org.emberon.winscan.home.ui.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/pay"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="org.emberon.winscan.dashboard.ui.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_transactions"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="org.emberon.winscan.notifications.ui.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_rewards"
         tools:layout="@layout/fragment_notifications" />
 </navigation>
