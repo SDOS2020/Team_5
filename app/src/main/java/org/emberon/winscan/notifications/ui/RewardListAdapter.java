@@ -1,5 +1,6 @@
 package org.emberon.winscan.notifications.ui;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,13 @@ public class RewardListAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         holder.getCashBackAmount().setText(String.valueOf(rewardsList.get(position).getValue()));
         holder.getCashBackCompany().setText(String.valueOf(rewardsList.get(position).getCompany()));
-        holder.getCashBackStatus().setText(String.valueOf(rewardsList.get(position).getCurrentStatus()));
+        Rewards.rewardStatus status = rewardsList.get(position).getCurrentStatus();
+        holder.getCashBackStatus().setText(String.valueOf(status));
+        if (status == Rewards.rewardStatus.UNCLAIMED)
+            holder.getCashBackStatus().setTextColor(Color.RED);
+        else
+            holder.getCashBackStatus().setTextColor(Color.GRAY);
+
     }
 
     @Override
