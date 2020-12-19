@@ -1,5 +1,6 @@
 package org.emberon.winscan.dashboard.ui;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,12 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerViewHol
         holder.getDateOfTransaction().setText(dateFormatDayMonth.format(transactionDate)+"\'"+dateFormatYear.format(transactionDate));
         holder.getPayeeName().setText(transactionList.get(position).getPayeeName());
         holder.getAmountPaid().setText("₹" + String.valueOf(transactionList.get(position).getAmount()/100));
-        holder.getTransactionStatus().setText(transactionList.get(position).getCurrentStatus().toString());
+        Transaction.transactionStatus status = transactionList.get(position).getCurrentStatus();
+        holder.getTransactionStatus().setText(status.toString());
+        if (status == Transaction.transactionStatus.CANCELLED || status == Transaction.transactionStatus.FAILED)
+            holder.getTransactionStatus().setTextColor(Color.RED);
+        else
+            holder.getTransactionStatus().setTextColor(Color.GRAY);
     }
 
     @Override
