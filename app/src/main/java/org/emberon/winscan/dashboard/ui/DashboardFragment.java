@@ -30,6 +30,7 @@ public class DashboardFragment extends Fragment implements DashboardContract.Das
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         ((BaseActivity) getActivity()).getActivityComponent().inject(this);
     }
