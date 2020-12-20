@@ -39,8 +39,8 @@ public class RewardListAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        holder.getCashBackAmount().setText(String.valueOf(rewardsList.get(position).getValue()));
-        holder.getCashBackCompany().setText(String.valueOf(rewardsList.get(position).getCompany()));
+        holder.getCashBackAmount().setText("₹"+String.valueOf(rewardsList.get(position).getValue()));
+
         Rewards.rewardStatus status = rewardsList.get(position).getCurrentStatus();
         holder.getCashBackStatus().setText(String.valueOf(status));
         if (status == Rewards.rewardStatus.UNCLAIMED)
@@ -48,6 +48,12 @@ public class RewardListAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
         else
             holder.getCashBackStatus().setTextColor(Color.GRAY);
 
+        if (rewardsList.get(position).getCompany().equals("zomato")){
+            holder.getCashBackCompanyLogo().setImageResource(R.mipmap.zomato_logo);
+        }
+        else if (rewardsList.get(position).getCompany().equals("uber")){
+            holder.getCashBackCompanyLogo().setImageResource(R.mipmap.uber_logo);
+        }
     }
 
     @Override
