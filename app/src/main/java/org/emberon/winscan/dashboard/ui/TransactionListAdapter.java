@@ -52,8 +52,14 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerViewHol
         holder.getTransactionStatus().setText(status.toString());
         if (status == Transaction.transactionStatus.CANCELLED || status == Transaction.transactionStatus.FAILED)
             holder.getTransactionStatus().setTextColor(Color.RED);
+
+        else if(status == Transaction.transactionStatus.SUCCESSFUL){
+            holder.getTransactionStatus().setTextColor(Color.GREEN);
+        }
         else
             holder.getTransactionStatus().setTextColor(Color.GRAY);
+
+
     }
 
     @Override
